@@ -2,8 +2,7 @@
 	<div>
 		<div class="header">
 			<ul class="header-button-left">
-				<li v-if="step < 1">Cancel</li>
-				<li v-else @click="step--">Cancel</li>
+				<li v-if="step > 0" @click="step--">Cancel</li>
 			</ul>
 			<ul class="header-button-right">
 				<li v-if="step == 1" @click="step++">Next</li>
@@ -12,27 +11,9 @@
 			<img src="./assets/logo.png" class="logo" />
 		</div>
 
-		<!-- vuex test -->
-		<!-- <h4> 안녕 {{ $store.state.name }} 야</h4>
-		<p>나이는 : {{ $store.state.age }} 살이야</p>
-		<button @click="$store.commit('nameChange')">이름변경버튼</button>
-		<button @click="$store.commit('increment', 10)">나이증가버튼</button> -->
-		<!-- state의 어떤 수정이 요구될때
-			store.js에 state수정방법정의 후
-			store.js에 부탁하기 
-			부탁하려면 $store.commit(함수명) -> mutations에 부탁
-		-->
-
-		<!-- <p> {{ name }} {{ 카운터 }}</p>
-		<button @click="카운터++">버튼</button> -->
-
 		<Container :posting="posting" :step="step" :image="image" @write="write = $event" />
 
-		<button v-if="step == 0" @click="more">더보기</button>
-
-		<!-- <p>{{ $store.state.more }}</p>
-		<button @click="$store.dispatch('getData')">더보기 버튼</button> -->
-		<!-- 부탁하려면 $store.dispatch(함수명) -> actions 부탁 -->
+		<button v-if="step == 0, btnMore==true" @click="more" class="btn-more">더보기</button>
 
 		<div class="footer" v-if="step == 0">
 			<ul class="footer-button-plus">
@@ -49,7 +30,7 @@
 	import Container from './components/Container.vue'
 	import postdata from './postdata.js'
 	import axios from 'axios'
-	import { mapState } from 'vuex'
+	//import { mapState } from 'vuex'
 
 	export default {
 		name: 'App',
@@ -62,6 +43,7 @@
 				write : '',
 				selectFilter: '',
 				카운터: 0,
+				btnMore: true,
 			}
 		},
 		methods: {
@@ -81,17 +63,15 @@
 				//console.log(mynotice.filter);
 			},
 			more() {				
-				// 데이터를 전송할때
-				// axios.post('URL', {name : 'kim'}).then().catch((err)=>{
-				// 	err
-				// }) //catch는 실패시
-				
 				// 데이터를 받을때
 				axios.get(`https://codingapple1.github.io/vue/more${this.clickData}.json`)
 				.then( result => {
 					//console.log(result.data);
 					this.posting.push(result.data);
 					this.clickData++;
+				}).catch( error => {
+					alert('더이상 게시물이 없습니다');
+					this.btnMore = false;
 				})
 			},
 			// (방법 1) FileReader() 파일을 글자로 변환해줌
@@ -109,21 +89,6 @@
 				return new Date();
 			}
 		},
-
-		computed : {
-			// name() {
-			// 	return this.$store.state.name
-			// },
-			// now2(){
-			// 	return new Date();
-			// },
-			//...mapState(['name', 'age', 'likes']),
-			//...mapState([작명 : 'name',]),
-		}, 
-		//  methods vs computed
-		// methods함수는 사용할 때마다 실행된다.
-		// computed 함수는 한번만 실행 후 사용해도 실행되지 않는다/ 처음 실행하고 값을 간직.
-
 		components: {
 			Container
 		},
@@ -163,6 +128,7 @@
 		padding-bottom: 8px;
 		position: sticky;
 		top: 0;
+		z-index: 99;
 	}
 
 	.header-button-left {
@@ -211,5 +177,18 @@
 
 	.input-plus {
 		cursor: pointer;
+	}
+
+	.btn-more {
+		display: block;
+		outline: none;
+		border: none;
+		margin: 10px 0;
+		padding: 10px 0;
+		width: 100%;
+		cursor: pointer;
+		font-size: 12px;
+		font-weight: bold;
+		color: black;
 	}
 </style>

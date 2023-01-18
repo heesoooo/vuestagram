@@ -20,5 +20,9 @@ npm run build
 npm run lint
 ```
 
+### after build / screen check
+```
+serve -s dist
+```
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

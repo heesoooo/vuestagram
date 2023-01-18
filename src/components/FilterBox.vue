@@ -1,20 +1,7 @@
 ﻿<template>
 	<div @click="fire" :class="filter + ' filter-item'" :style="`background-image:url(${image})`">
-		<slot></slot>	
-
-		<!-- <slot name="a"></slot>
-		<slot name="b"></slot>
-		<slot name="c"></slot> -->
+		<slot></slot>
 	</div>
-	
-	<!-- 태그안에 데이터 바인딩할때만 <slot></slot>을 쓸 수 있다. -->
-
-	<!-- 
-		slot 여러개 사용하는 법
-		1. <slot name="a"></slot>
-		2. <template b-slot:a> 보낼거 </template>
-	-->
-
 </template>
 <script>
 	export default {

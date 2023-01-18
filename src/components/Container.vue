@@ -16,17 +16,6 @@
 					<template v-slot:b>데이터2</template>
 					<template v-slot:c>데이터3</template> -->
 				</FilterBox>
-
-				<!-- 여기서 :class로 filters 배열값 class로 넣어주고 싶을때 -->
-				<!-- <FilterBox :image="image" :filters="filters" v-for="(b, i) in filters" :key="i" :class="`${filters[i]}`" ></FilterBox> -->
-
-				<!-- 
-					slot props
-					slot 사용할때 부모가 자식데이터 필요한 경우
-
-					1. <slot :자식데이터="자식데이터">
-					2. 부모는 <template v-slot="작명"> 후에 {{ 작명.자식데이터 }}
-				-->
 			</div>
 		</div>
 
@@ -82,8 +71,10 @@
 .upload-image {
 	width: 100%;
 	height: 450px;
-	background: cornflowerblue;
-	background-size: cover;
+	background: rgba(0,0,0,.1);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: 50%;
 }
 .filters {
 	overflow-x: scroll;
